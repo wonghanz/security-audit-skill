@@ -38,6 +38,12 @@ A backend accepts forwarded identity, mTLS subject, or authorization metadata fr
 **Metadata and internal-service reachability**
 An untrusted URL, destination, or protocol selection reaches instance/container metadata, control-plane sockets, or internal APIs with workload credentials. Trace URL parsing and redirect handling under `ATTACK-CLASSES.md`; here establish deployed network, metadata-version, and identity boundaries.
 
+**Edge CDN ruleset mutation and 301/302 redirect hijacking**
+Over-privileged edge API credentials (e.g., Cloudflare API tokens, CloudFront distribution permissions) allow modifying edge rulesets, page rules, or workers. An attacker with compromised credentials can inject 301 redirects targeting all incoming requests or specific subdomains to redirect traffic to malicious external infrastructure (TDS, phishing, ClickFix droppers). Review whether SaaS credentials use least-privilege scoping, IP allowlisting, and whether edge monitoring verifies redirect headers independently.
+
+**Intentional origin blackhole misclassification and monitoring blindspots**
+Origin reverse proxies configure intentional connection drop mechanisms (e.g., Nginx `return 444` on unrouted paths or root `/`) causing edge proxies to return HTTP 502/521/444. Review synthetic probes and watchdog daemons to verify they distinguish intentional origin stealth drops from true microservice crashes or 301 hijackings.
+
 ## Container and orchestration attack classes (subagent_type: `general`)
 
 **Host or control-plane capability exposure**

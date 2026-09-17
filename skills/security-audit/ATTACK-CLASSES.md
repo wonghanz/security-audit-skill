@@ -25,6 +25,8 @@ Use `confirmed` only when source evidence and bounded validation establish the f
 > **Data-isolation and lifecycle targets** (multi-tenant stores, caches/search, object links, analytics, export/backup, migration, deletion, retention, or restore): use [DATA-ISOLATION-AND-LIFECYCLE.md](DATA-ISOLATION-AND-LIFECYCLE.md).
 >
 > **Desktop, mobile, and local-IPC targets** (native apps, deep links, webview bridges, exported components, privileged helpers, local daemons, Unix sockets/XPC/Binder/D-Bus): use [DESKTOP-MOBILE-AND-LOCAL-IPC.md](DESKTOP-MOBILE-AND-LOCAL-IPC.md).
+>
+> **NodiGuard AI defense, vibe-coding DLP, and edge sentinel targets** (AI pair-programming proxies, edge CDN rulesets, 301 redirect hijack defense, intentional blackhole drops, anti-steganography prompt defense, autonomous tool blast-radius gating, host persistence, or GPU VRAM lifecycle): use [NODIGUARD-DEFENSE-AND-EDGE-SENTINEL.md](NODIGUARD-DEFENSE-AND-EDGE-SENTINEL.md).
 
 **Injection** (subagent_type: `general`)
 Trace untrusted input from entry point to dangerous sink. What counts as a "dangerous sink" depends on the application:

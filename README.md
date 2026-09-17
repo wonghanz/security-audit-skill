@@ -1,8 +1,13 @@
-# security-audit
+# security-audit (with NodiGuard Enterprise Sentinel)
 
 A coding-agent skill that turns your agent into a security auditor. It orchestrates isolated agents through reconnaissance, coverage-led hunting, candidate validation, structured output, independent record verification, and target-neutral reporting.
 
-This is the skill that seeded Cloudflare's vulnerability discovery harness, described in [Build your own vulnerability harness](https://blog.cloudflare.com/build-your-own-vulnerability-harness). The harness grew into a multi-stage, fleet-wide system; this skill is the single-repo starting point it evolved from.
+This skill combines Cloudflare's vulnerability discovery harness methodologies with **NodiGuard Enterprise Sentinel** cyber-defense directives:
+- **Anti-Vibe-Coding Zero-Leak DLP**: Pre-flight scanning for hardcoded API keys, JWTs, Cloudflare tokens, and database passwords, enforcing ephemeral credential scoping.
+- **Edge Ruleset & 301 Anti-Hijack Defense**: Active detection of unauthorized CDN / Cloudflare ruleset tampering, redirect hijacks (e.g., Traffic Direction Systems, fake Turnstile / ClickFix droppers), and distinguishing intentional origin blackhole defense (HTTP 444/502) from real service outages.
+- **Anti-Fable 5 Steganography Shield**: Normalization and stripping of zero-width Unicode codepoints and homoglyphs used to smuggle prompts past filters.
+- **Tool Blast-Radius Gating**: Impact analysis and human approval gates for destructive autonomous agent tool executions (`rm -rf`, database drops).
+- **Resource Lifecycle Management**: Sub-100ms GPU VRAM eviction (`keep_alive: 0`) and native working-set memory compaction for local models.
 
 ## What it does
 
@@ -25,16 +30,17 @@ Multiple runs against the same repo are additive. The skill uses prior ledgers a
 
 | File | Purpose |
 |------|---------|
-| `SKILL.md` | Setup, core principles, platform terminology, workflow overview, and audit anti-patterns |
+| `SKILL.md` | Setup, core principles, platform terminology, NodiGuard Sentinel directives, workflow overview, and audit anti-patterns |
 | `RECONNAISSANCE.md` | Phase 1 reconnaissance prompts and synthesis instructions |
 | `HUNTING.md` | Phase 2 orchestration, hunting methodology, and validation rules |
 | `ATTACK-CLASSES.md` | Core, wildcard, and obvious-things attack prompts |
+| `NODIGUARD-DEFENSE-AND-EDGE-SENTINEL.md` | NodiGuard AI defense, anti-vibe-coding DLP, edge ruleset 301 anti-hijack, steganography, blast-radius, and VRAM lifecycle classes |
 | `MEMORY-SAFETY-AND-BINARY.md` | Memory-safety, binary, and kernel hunting classes for native targets |
-| `AI-AND-LLM.md` | Prompt-injection, agent/tool, and output-handling hunting classes for LLM-backed targets |
+| `AI-AND-LLM.md` | Prompt-injection, agent/tool, blast-radius, and output-handling hunting classes for LLM-backed targets |
 | `WEB-PROTOCOL-AND-AUTH.md` | HTTP request-framing, cache, and authentication-protocol hunting classes for HTTP-protocol and auth targets |
 | `CLIENT-SIDE.md` | DOM-injection, messaging-trust, UI-redress, and prototype-pollution hunting classes for client-side/browser targets |
 | `SUPPLY-CHAIN-AND-RELEASE.md` | Dependency, CI, release, signing, update, plugin, and extension hunting classes |
-| `CLOUD-AND-DEPLOYMENT.md` | IAM, infrastructure-as-code, container, serverless, ingress, and runtime-configuration hunting classes |
+| `CLOUD-AND-DEPLOYMENT.md` | IAM, infrastructure-as-code, container, serverless, edge ruleset tampering, and runtime-configuration hunting classes |
 | `PROTOCOLS-RPC-AND-MESSAGING.md` | RPC, serialization, queue, broker, webhook, and streaming-protocol hunting classes |
 | `RESOURCE-EXHAUSTION-AND-AVAILABILITY.md` | Shared resource, quota, queue, worker, and operator-spend hunting classes |
 | `DATA-ISOLATION-AND-LIFECYCLE.md` | Tenant isolation, cache, search, export, backup, migration, deletion, and restore hunting classes |
@@ -51,14 +57,14 @@ Multiple runs against the same repo are additive. The skill uses prior ledgers a
 Install the skill with the [Skills CLI](https://skills.sh):
 
 ```bash
-npx skills add https://github.com/cloudflare/security-audit-skill \
+npx skills add https://github.com/wonghanz/security-audit-skill \
   --skill security-audit
 ```
 
 Use `--global` for a user-level installation:
 
 ```bash
-npx skills add https://github.com/cloudflare/security-audit-skill \
+npx skills add https://github.com/wonghanz/security-audit-skill \
   --skill security-audit \
   --global
 ```

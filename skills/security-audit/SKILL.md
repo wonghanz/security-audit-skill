@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: Security guidance and vulnerability review for codebases, APIs, services, CLI tools, libraries, and daemons. Use for security questions, focused reviews, vulnerability research, security audits, or pen tests. Run the complete workflow only for explicit codebase audit or pen-test requests, full/comprehensive/end-to-end reviews, or requested report artifacts.
+description: Enterprise-grade security guidance and vulnerability review for codebases, AI agents, cloud edge infrastructure, APIs, and services. Powered by NodiGuard Cyber-Defense Sentinel and Cloudflare vulnerability discovery methodologies. Enforces Anti-Vibe-Coding Zero-Leak DLP, Cloudflare Edge Ruleset anti-hijack verification, Anti-Fable 5 adversarial injection defense, and autonomous tool blast-radius gating. Run the complete workflow only for explicit codebase audit or pen-test requests, full/comprehensive/end-to-end reviews, or requested report artifacts.
 ---
 
 # Security Audit
@@ -164,6 +164,15 @@ The high/medium discriminator: does the demonstrated result fully defeat an expl
 ### Recommend the smallest effective source fix
 
 For each confirmed finding, identify the invariant the code must enforce and the narrowest source change that enforces it at the last trusted decision point. Prefer specific repository-relative changes and regression tests over generic hardening advice. The audit describes fixes; it does not modify target source.
+
+### NodiGuard Enterprise Sentinel Directives
+
+When auditing or reviewing codebases and agentic workflows, enforce the following core NodiGuard security principles:
+1. **Zero-Leak Anti-Vibe-Coding DLP**: Flag any hardcoded API keys, JWTs, Cloudflare tokens, or plaintext database passwords (`sk-...`, `AKIA...`, `ghp_...`). Require environment-variable loading (`os.environ.get(...)`) and ephemeral credential scoping.
+2. **Cloudflare Edge Ruleset & 301 Anti-Hijack Defense**: Audit edge CDN configurations (Cloudflare, CloudFront) to verify that API credentials cannot be leveraged to inject unauthorized 301/302 Redirect Rules. Distinguish intentional origin blackhole defense (HTTP 444/502) from real service outages.
+3. **Anti-Fable 5 Steganography Normalization**: Verify that user/prompt inputs are stripped of invisible Unicode codepoints (zero-width spaces `\u200B`, direction overrides `\u202E`, homoglyphs) before security policy evaluation.
+4. **Autonomous Tool Blast-Radius Gating**: Prohibit ungated destructive operations (`rm -rf`, recursive deletion, table/database drops) in autonomous coding agents; require deterministic impact calculation and human-in-the-loop approval gates.
+5. **Local Physical Isolation & Memory Lifecycle**: Verify that internal network topologies (`10.0.0.0/8`, `192.168.0.0/16`) are masked before transmission, and that local models enforce explicit GPU VRAM eviction (`keep_alive: 0`) and process working-set memory compaction.
 
 ## Full audit workflow
 

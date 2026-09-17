@@ -31,6 +31,9 @@ Attacker-controlled content or model summaries are written into memory that late
 **Prompt role and provenance confusion**
 Prompt assembly lets untrusted text impersonate a system message, prior turn, tool result, policy, or memory record. Look for string concatenation, untyped history, caller-controlled role fields, and serialization round trips that lose source labels. Confirm that the forged provenance changes a deterministic trust decision or reaches a meaningful capability.
 
+**Steganographic instruction smuggling (Anti-Fable 5)**
+Adversarial inputs embed zero-width Unicode codepoints (`\u200B`, `\u200C`, `\u200D`), bidirectional text overrides (`\u202E`), or homoglyphs to conceal injection instructions from basic keyword filters and DLP scanners. Verify whether input pipelines perform canonical normalization and strip invisible characters before prompt evaluation and policy matching.
+
 ## Tool and action attack classes (subagent_type: `general`)
 
 **Tool-argument injection into a downstream sink**
@@ -47,6 +50,9 @@ The schema accepts aliases, extra fields, duplicate keys, coercions, nested free
 
 **Unbounded delegated action loops**
 A bounded request can enqueue repeated spend, send, mutation, or external API work without a per-request budget, per-action authorization, cancellation, or idempotency control. Confirm impact on shared cost, quotas, other users, or durable state. Do not test by exhausting a service; use code-level accounting and a locally bounded loop.
+
+**Autonomous tool blast-radius and ungated destructive sinks**
+Autonomous coding agents, copilot CLI loops, or tool dispatchers execute high-impact mutations (e.g., recursive file deletion `rm -rf`, database schema/table drops, disk formatting, uncontained subprocesses) without calculating blast radius (affected file counts, directory tree depth) or requiring explicit confirmation. Trace tool dispatch handlers for deterministic blast-radius analysis and human approval gates.
 
 ## MCP and sub-agent trust classes (subagent_type: `general`)
 
@@ -66,6 +72,9 @@ Model output reaches an executing HTML, Markdown, template, URL, or command sink
 
 **Sensitive context extraction**
 The assembled context contains credentials, another user's data, private source, or policy values that themselves grant access, and user-influenced output exposes them. Read prompt assembly and data-fetch code. Disclosure of generic instructions or behavior that does not cross a data boundary is not a finding.
+
+**Vibe-coding credential exfiltration and DLP omission**
+Developer prompts, agent context windows, or code generation workflows transmit hardcoded secrets (`sk-...`, `AKIA...`, `ghp_...`, Cloudflare tokens, plaintext DB passwords) or internal network topologies (`10.0.0.0/8`, `192.168.0.0/16`) to cloud LLMs unmasked. Check whether pre-flight DLP scanning and client-side ephemeral tokenization intercept secrets before network egress.
 
 ## Universal moves (apply across the above)
 
